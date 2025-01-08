@@ -1,10 +1,12 @@
-## Tree Monster mod for [Minetest][]
+## Tree Monster mod for [Luanti (Minetest)](https://luanti.org)
 
 
 ---
 ### **Description:**
 
-Tree Monster mod extracted from *[mobs_monster][]* @ [Git commit 1561ec1][ver.mobs_monster].
+Tree Monster mod extracted from *[mobs_monster][]*.
+
+Latest update: [2017-07-29][ver.mobs_monster]
 
 [b]Mob description:[/b]
 - Found atop tree's at night time they drop down and look for food in the form of players and animals. Can drop saplings and sometimes an apple or three.
@@ -22,9 +24,7 @@ Tree Monster mod extracted from *[mobs_monster][]* @ [Git commit 1561ec1][ver.mo
 [MIT](license.txt)
 
 
-[Minetest]: http://www.minetest.net/
+[mobs_monster]: https://content.luanti.org/packages/TenPlus1/mobs_monster/
+[mobs_redo]: https://content.luanti.org/packages/TenPlus1/mobs/
 
-[mobs_monster]: https://github.com/tenplus1/mobs_monster
-[mobs_redo]: https://forum.minetest.net/viewtopic.php?t=9917
-
-[ver.mobs_monster]: https://github.com/tenplus1/mobs_monster/tree/1561ec1
+[ver.mobs_monster]: https://codeberg.org/tenplus1/mobs_monster/src/commit/1561ec14477bb1663ebaaf4813b334e54d0ca193
