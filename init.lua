@@ -1,7 +1,7 @@
 
 -- translation and custom tree monster types
 
-local S = minetest.get_translator("mobs_monster")
+local S = minetest.get_translator("mobs_tree_monster")
 
 local tree_types = {
 
