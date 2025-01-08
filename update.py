@@ -20,6 +20,8 @@ except ModuleNotFoundError:
 
 upstream = "https://codeberg.org/tenplus1/mobs_monster"
 ref = "master"
+mob_name = "tree_monster"
+mob_title = "Tree Monster"
 
 
 def getRefUrl(path):
@@ -74,22 +76,24 @@ def updateNamespace(target):
 	lines = content.split("\n")
 	for idx in reversed(range(len(lines))):
 		li = lines[idx]
-		if li.startswith("mobs:register_egg(") or li.startswith("mobs:alias_mob(\"mobs:tree_monster\"") or li == "-- spawn egg" or li == "-- compatibility with older mobs mod":
+		if li.startswith("mobs:register_egg(") or li.startswith("mobs:alias_mob(\"mobs:{}\"".format(mob_name)) or li == "-- spawn egg" or li == "-- compatibility with older mobs mod":
 			lines.pop(idx)
+		elif ".get_translator(\"mobs_monster\")" in li:
+			lines[idx] = li.replace("\"mobs_monster\"", "\"mobs_{}\"".format(mob_name))
 
 	add_info = [
 		"if core.global_exists(\"asm\") then",
 		"	asm.addEgg({",
-		"		name = \"tree_monster\",",
-		"		title = S(\"Tree Monster\"),",
+		"		name = \"{}\",".format(mob_name),
+		"		title = S(\"{}\"),".format(mob_title),
 		"		inventory_image = \"default_tree_top.png\",",
-		"		spawn = \"mobs:tree_monster\",",
+		"		spawn = \"mobs:{}\",".format(mob_name),
 		"		ingredients = \"default:tree\",",
 		"	})",
 		"end",
-		"core.register_alias(\"mobs:tree_monster\", \"spawneggs:tree_monster\")",
+		"core.register_alias(\"mobs:{0}\", \"spawneggs:{0}\")".format(mob_name),
 		"",
-		"mobs:alias_mob(\"mobs_monster:tree_monster\", \"mobs:tree_monster\") -- compatibility"
+		"mobs:alias_mob(\"mobs_monster:{0}\", \"mobs:{0}\") -- compatibility".format(mob_name)
 	]
 	lines = lines + add_info
 	content = "\n".join(lines)
@@ -103,7 +107,7 @@ def updateNamespace(target):
 
 def updateLua():
 	target = "init.lua"
-	download(getRefUrl("tree_monster.lua"), target)
+	download(getRefUrl("{}.lua".format(mob_name)), target)
 	updateNamespace(target)
 
 
@@ -125,13 +129,13 @@ def updateLocale():
 	p = re.compile(r"S\(\".*\"\)")
 	m = p.search(content)
 	while m:
-		s = m.group(0).lstrip("S(\"").rstrip("\")")
+		s = m.group(0)[3:-2]
 		strings_found.append(s)
 		content = content[m.end():]
 		m = p.search(content)
 
 	if len(strings_found) > 0:
-		t_out = "# textdomain:mobs_monster\n\n"
+		t_out = "# textdomain:mobs_{}\n\n".format(mob_name)
 		for f in strings_found:
 			t_out = t_out + f + "=\n"
 
@@ -152,7 +156,7 @@ def updateConf():
 	for idx in range(len(lines)):
 		li = lines[idx]
 		if li.startswith("name ="):
-			lines[idx] = "name = tree_monster"
+			lines[idx] = "name = {}".format(mob_name)
 		elif li.startswith("optional_depends ="):
 			if "asm_spawneggs" not in li.replace(" ", "").split("=")[1].split(","):
 				lines[idx] = lines[idx] + ", asm_spawneggs"
@@ -163,7 +167,7 @@ def updateConf():
 
 
 def updateTextures():
-	file_basename = "mobs_tree_monster"
+	file_basename = "mobs_{}".format(mob_name)
 	if not os.path.exists("textures"):
 		os.mkdir("textures")
 	file_path = "textures/{}.png".format(file_basename)
@@ -203,12 +207,12 @@ if __name__ == "__main__":
 	# models
 	if not os.path.exists("models"):
 		os.mkdir("models")
-	download(getRefUrl("models/mobs_tree_monster.b3d"), "models/mobs_tree_monster.b3d")
+	download(getRefUrl("models/mobs_{}.b3d".format(mob_name)), "models/mobs_{}.b3d".format(mob_name))
 
 	# sounds
 	if not os.path.exists("sounds"):
 		os.mkdir("sounds")
-	download(getRefUrl("sounds/mobs_treemonster.ogg"), "sounds/mobs_treemonster.ogg")
+	download(getRefUrl("sounds/mobs_{}.ogg".format(mob_name.replace("_", ""))), "sounds/mobs_{}.ogg".format(mob_name.replace("_", "")))
 
 	# textures
 	updateTextures()
