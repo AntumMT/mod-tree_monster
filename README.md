@@ -14,13 +14,13 @@ __Mob description:__
 ---
 ### **Dependencies:**
 
-- __Required:__
-  - ___[mobs (mobs_redo)][mobs_redo]___
-- __Optional:__
-  - ___[default]___
-  - ___[lucky_block]___
-  - ___[toolranks]___
-  - ___[asm_spawneggs]___
+- **Required:**
+  - ***[mobs (mobs_redo)][mobs_redo]***
+- **Optional:**
+  - ***[default]***
+  - ***[lucky_block]***
+  - ***[toolranks]***
+  - ***[asm_spawneggs]***
 
 
 ---
